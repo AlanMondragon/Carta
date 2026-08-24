@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para ti</title>
+<style>
+  :root{
+    --vino: #5c1a2b;
+    --vino-osc: #3c0f1c;
+    --rosa-polvo: #e8c9c9;
+    --crema: #fbf3ea;
+    --dorado: #c9a04e;
+    --dorado-suave: #e3c98b;
+    --papel: #fdf8ee;
+    --sombra: rgba(60, 15, 28, 0.35);
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+  }
+
+  body{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+      radial-gradient(circle at 20% 15%, #7a2438 0%, transparent 45%),
+      radial-gradient(circle at 85% 80%, #7a2438 0%, transparent 40%),
+      linear-gradient(160deg, var(--vino-osc), var(--vino) 55%, #4a1522);
+    font-family: Georgia, 'Times New Roman', serif;
+    overflow:hidden;
+    position:relative;
+  }
+
+  /* textura de puntos sutil */
+  body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 22px 22px;
+    pointer-events:none;
+  }
+
+  .encabezado{
+    position:absolute;
+    top:6%;
+    left:50%;
+    transform:translateX(-50%);
+    text-align:center;
+    color:var(--dorado-suave);
+    letter-spacing:0.35em;
+    font-size:0.75rem;
+    text-transform:uppercase;
+    opacity:0.75;
+  }
+
+  .escena{
+    position:relative;
+    width:min(380px, 82vw);
+    height:min(280px, 60vw);
+    perspective:1600px;
+  }
+
+  /* ---------- SOBRE ---------- */
+  .sobre{
+    position:absolute;
+    inset:0;
+    cursor:pointer;
+  }
+
+  .sobre-cuerpo{
+    position:absolute;
+    inset:0;
+    background: linear-gradient(160deg, #f4e9d8, #e9d9bd);
+    border-radius: 6px;
+    box-shadow: 0 25px 50px var(--sombra), inset 0 0 0 1px rgba(92,26,43,0.15);
+    z-index:5;
+  }
+
+  /* solapas laterales e inferior dibujadas con gradientes triangulares */
+  .sobre-cuerpo::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(135deg, transparent 49.6%, rgba(92,26,43,0.10) 50%, transparent 50.4%),
+      linear-gradient(45deg, transparent 49.6%, rgba(92,26,43,0.10) 50%, transparent 50.4%);
+  }
+
+  .solapa-superior{
+    position:absolute;
+    top:0; left:0; right:0;
+    height:60%;
+    background: linear-gradient(160deg, #f7ede0, #ecdcc0);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top center;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transition: transform 1s cubic-bezier(.6,.05,.2,1);
+    box-shadow: 0 2px 6px rgba(92,26,43,0.12);
+    z-index:6;
+  }
+
+  .sello{
+    position:absolute;
+    top:52%;
+    left:50%;
+    width:58px;
+    height:58px;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background: radial-gradient(circle at 35% 30%, #a3273f, var(--vino) 70%, var(--vino-osc));
+    box-shadow: 0 6px 14px rgba(0,0,0,0.35), inset 0 0 0 2px rgba(255,255,255,0.08);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:8;
+    transition: transform .4s ease, opacity .5s ease;
+  }
+
+  .sello svg{ width:26px; height:26px; }
+
+  .pista{
+    position:absolute;
+    bottom:-42px;
+    left:50%;
+    transform:translateX(-50%);
+    color:var(--dorado-suave);
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    white-space:nowrap;
+    opacity:0.85;
+    animation: pulso 2.2s ease-in-out infinite;
+  }
+
+  @keyframes pulso{
+    0%,100%{ opacity:0.55; transform:translateX(-50%) translateY(0); }
+    50%{ opacity:0.95; transform:translateX(-50%) translateY(-3px); }
+  }
+
+  /* ---------- CARTA ---------- */
+  .carta{
+    position:absolute;
+    left:6%;
+    right:6%;
+    bottom:8%;
+    height:88%;
+    background: var(--papel);
+    border-radius:3px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    transform: translateY(0);
+    z-index:3;
+    padding: 34px 28px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    overflow:hidden;
+  }
+
+  .carta::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image: repeating-linear-gradient(rgba(92,26,43,0.05) 0 1px, transparent 1px 28px);
+    pointer-events:none;
+  }
+
+  .carta-orna{
+    font-size:1.4rem;
+    color:var(--dorado);
+    margin-bottom:10px;
+    letter-spacing:0.3em;
+  }
+
+  .carta-titulo{
+    font-family: 'Brush Script MT', 'Segoe Script', cursive;
+    font-size:2rem;
+    color:var(--vino);
+    margin:0 0 14px 0;
+  }
+
+  .carta-texto{
+    font-size:1.05rem;
+    line-height:1.75;
+    color:#3c2a1e;
+    white-space:pre-wrap;
+    max-width: 46ch;
+  }
+
+  .carta-firma{
+    margin-top:auto;
+    padding-top:18px;
+    font-family: 'Brush Script MT', 'Segoe Script', cursive;
+    font-size:1.4rem;
+    color:var(--vino);
+  }
+
+  /* estado final: la carta viaja al centro exacto de la pantalla */
+  .carta.centrada{
+    position:fixed;
+    top:50%;
+    left:50%;
+    right:auto;
+    bottom:auto;
+    width:min(92vw, 480px);
+    height:auto;
+    max-height:82vh;
+    overflow-y:auto;
+    transform: translate(-50%,-50%);
+    z-index:50;
+    box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+    padding: 42px 34px;
+  }
+
+  
+
+  /* ---------- ESTADO ABIERTO ---------- */
+  .escena.abierta .solapa-superior{
+    transform: rotateX(180deg);
+    box-shadow: none;
+  }
+  .escena.abierta .sello{
+    opacity:0;
+    transform:translate(-50%,-50%) scale(0.4);
+  }
+  .escena.abierta .sobre{
+    cursor:default;
+    transform: translateY(135%);
+    transition: transform 0.9s cubic-bezier(.4,0,.2,1) 0.45s;
+  }
+
+  /* corazones flotantes */
+  .corazon{
+    position:absolute;
+    bottom:-10%;
+    font-size: 1.1rem;
+    color: var(--dorado-suave);
+    opacity:0;
+    pointer-events:none;
+    animation: flotar 3.2s ease-in forwards;
+  }
+
+  @keyframes flotar{
+    0%{ opacity:0; transform: translateY(0) translateX(0) scale(0.6) rotate(0deg); }
+    12%{ opacity:0.9; }
+    100%{ opacity:0; transform: translateY(-260px) translateX(var(--drift, 20px)) scale(1) rotate(20deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .solapa-superior, .carta, .sello, .corazon{ transition:none !important; animation:none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="encabezado">Un mensaje para ti</div>
+
+  <div class="escena" id="escena">
+    <div class="carta">
+      <div class="carta-orna">✦</div>
+      <h1 class="carta-titulo">Para mi persona favorita</h1>
+      <div class="carta-texto" id="mensaje">Aquí va tu mensaje. Edita el texto dentro de la etiqueta con id="mensaje" en el archivo HTML para escribir lo que quieras decirle. Puedes usar varias líneas, y el texto se acomodará solo dentro de la carta.</div>
+      <div class="carta-firma">Con todo mi cariño</div>
+    </div>
+
+    <div class="sobre" id="sobre">
+      <div class="sobre-cuerpo"></div>
+      <div class="solapa-superior"></div>
+      <div class="sello" id="sello">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 21s-7.5-4.6-10-9.3C.6 8.2 2.4 5 5.8 5c2 0 3.4 1 4.2 2.4C10.8 6 12.2 5 14.2 5c3.4 0 5.2 3.2 3.8 6.7C15.5 16.4 12 21 12 21z"
+                fill="#e3c98b" stroke="#e3c98b" stroke-width="0.5"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="pista" id="pista">toca el sello para abrir</div>
+  </div>
+
+<script>
+  const escena = document.getElementById('escena');
+  const sobre = document.getElementById('sobre');
+  const pista = document.getElementById('pista');
+  const carta = document.querySelector('.carta');
+  let abierto = false;
+
+  function crearCorazones(){
+    for(let i=0;i<10;i++){
+      setTimeout(()=>{
+        const c = document.createElement('div');
+        c.className='corazon';
+        c.textContent = Math.random() > 0.5 ? '♥' : '✦';
+        c.style.left = (10 + Math.random()*80) + '%';
+        c.style.setProperty('--drift', (Math.random()*80-40)+'px');
+        c.style.fontSize = (0.8 + Math.random()*0.9) + 'rem';
+        escena.appendChild(c);
+        setTimeout(()=> c.remove(), 3300);
+      }, i*140);
+    }
+  }
+
+  function llevarCartaAlCentro(){
+    // 1. posición y tamaño actuales de la carta (dentro del sobre)
+    const r1 = carta.getBoundingClientRect();
+
+    // 2. aplicamos el estado final (fija y centrada en la pantalla)
+    carta.classList.add('centrada');
+    const r2 = carta.getBoundingClientRect();
+
+    // 3. calculamos la diferencia entre el punto de partida y el final
+    const dx = (r1.left + r1.width / 2) - (r2.left + r2.width / 2);
+    const dy = (r1.top + r1.height / 2) - (r2.top + r2.height / 2);
+    const escala = r1.width / r2.width;
+
+    // 4. la "teletransportamos" visualmente al punto de partida (sin transición)
+    carta.style.transition = 'none';
+    carta.style.transform = `translate(-50%,-50%) translate(${dx}px, ${dy}px) scale(${escala})`;
+    carta.getBoundingClientRect(); // fuerza reflow
+
+    // 5. animamos hacia el centro real
+    requestAnimationFrame(() => {
+      carta.style.transition = 'transform 1s cubic-bezier(.22,.75,.2,1)';
+      carta.style.transform = 'translate(-50%,-50%) scale(1)';
+    });
+  }
+
+  sobre.addEventListener('click', () => {
+    if(abierto) return;
+    abierto = true;
+    escena.classList.add('abierta');
+    pista.style.display = 'none';
+    crearCorazones();
+    setTimeout(llevarCartaAlCentro, 550);
+  });
+</script>
+
+</body>
+</html>
